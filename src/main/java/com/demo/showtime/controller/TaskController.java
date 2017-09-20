@@ -1,17 +1,26 @@
 package com.demo.showtime.controller;
 
+import com.demo.showtime.converter.TaskConverter;
+import com.demo.showtime.converter.TestCaseConverter;
+import com.demo.showtime.dao.CategoryRepository;
 import com.demo.showtime.dao.TaskRepository;
+import com.demo.showtime.model.Category;
 import com.demo.showtime.model.Task;
+import com.demo.showtime.model.TaskReq;
+import com.demo.showtime.model.TestCaseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,14 +40,18 @@ public class TaskController {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private Validator defaultValidator;
 
     @RequestMapping
     public ResponseEntity<?> getAllTasksNoPage() {
         return getAllTasks(DEFAULT_PAGE, DEFAULT_PAGE_SIZE);
     }
 
-    @RequestMapping(params = {"page", "size"})
-    public ResponseEntity<?> getAllTasks(@RequestParam("page") int page, @RequestParam("size") int size) {
+    @RequestMapping(params = {"page", "size"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<Task>> getAllTasks(@RequestParam("page") int page, @RequestParam("size") int size) {
         logger.info("Fetching all tasks");
         if (page < 0) page = DEFAULT_PAGE;
         if (size <= 0) size = DEFAULT_PAGE_SIZE;
@@ -61,15 +74,16 @@ public class TaskController {
     }
 
     @RequestMapping(method = POST)
-    public ResponseEntity<?> createTask(@Valid @RequestBody Task task, BindingResult result) {
-        logger.info("Creating task {}", task);
-        return saveOrUpdate(task, result);
-    }
-
-    @RequestMapping(method = PUT)
-    public ResponseEntity<?> updateTask(@Valid @RequestBody Task task, BindingResult result) {
-        logger.info("Updating task {}", task);
-        return saveOrUpdate(task, result);
+    public ResponseEntity<?> saveOrUpdateTask(@RequestBody TaskReq task, BindingResult result) {
+        logger.info("saveOrUpdateTask task {}", task);
+        Category category = categoryRepository.findOne(task.getCategory());
+        Task task0 = TaskConverter.convertDTOToEntity(task);
+        task0.setCategory(category);
+        for (TestCaseDTO dto : task.getTestCases()) {
+            task0.addTestCase(TestCaseConverter.convertDTOToEntity(dto));
+        }
+        defaultValidator.validate(task0, result);
+        return saveOrUpdate(task0, result);
     }
 
     @RequestMapping(value = "/{id}", method = DELETE)

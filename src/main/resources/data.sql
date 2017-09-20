@@ -1,5 +1,5 @@
-insert into category(id,title) VALUES (1,'level1');
-insert into category(id,title) VALUES (2,'level2');
-insert into task(id,title,description,last_modified,created_on,category_id) VALUES (1,'mytitle','descr',null,'2012-09-17 18:47:52.69',1);
-insert into task(id,title,description,last_modified,created_on,category_id) VALUES (3,'mytitle3','descr4',null,'2013-09-17 18:47:52.69',1);
-insert into task(id,title,description,last_modified,created_on,category_id) VALUES (2,'mytitle2','desc3r',null,'2014-09-17 18:47:52.69',2);
+INSERT INTO CATEGORY(CATEGORY_ID,TITLE) VALUES (1,'LEVEL1');
+INSERT INTO CATEGORY(CATEGORY_ID,TITLE) VALUES (2,'LEVEL2');
+INSERT INTO TASK(TASK_ID,TITLE,DESCRIPTION,LAST_MODIFIED,CREATED_ON,CATEGORY_ID) VALUES (1,'MYTITLE','DESCR',NULL,'2012-09-17 18:47:52.69',1);
+INSERT INTO TASK(TASK_ID,TITLE,DESCRIPTION,LAST_MODIFIED,CREATED_ON,CATEGORY_ID) VALUES (3,'MYTITLE3','DESCR4',NULL,'2013-09-17 18:47:52.69',1);
+INSERT INTO TASK(TASK_ID,TITLE,DESCRIPTION,LAST_MODIFIED,CREATED_ON,CATEGORY_ID) VALUES (2,'MYTITLE2','DESC3R',NULL,'2014-09-17 18:47:52.69',2);

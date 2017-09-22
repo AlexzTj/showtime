@@ -82,7 +82,7 @@ public class User implements Serializable {
         this.userRole = userRole;
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pk.user", cascade = CascadeType.ALL)
     public Set<Progress> getProgressSet() {
         return progressSet;
     }

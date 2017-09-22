@@ -65,7 +65,7 @@ public class Task implements Serializable {
     @Valid
     private Set<TestCase> testCases = new HashSet<>(0);
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pk.task", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Progress> progressSet = new HashSet<>(0);
 

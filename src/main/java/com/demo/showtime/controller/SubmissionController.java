@@ -2,6 +2,7 @@ package com.demo.showtime.controller;
 
 import com.demo.showtime.api.Client;
 import com.demo.showtime.api.hackerrank.model.submission.Response;
+import com.demo.showtime.dao.ProgressRepository;
 import com.demo.showtime.dao.TaskRepository;
 import com.demo.showtime.dao.TestCaseRepository;
 import com.demo.showtime.model.*;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,10 @@ public class SubmissionController {
     private ObjectMapper objectMapper;
     @Autowired
     private CheckerService checkerService;
+    @Autowired
+    private ProgressRepository progressRepository;
+    @Value("${submission.lang}")
+    private Integer lang;
 
     @RequestMapping(value = "/checker/submission", method = POST)
     @ResponseBody
@@ -61,6 +67,22 @@ public class SubmissionController {
 
         Response response = client.submit(submissionRequest.getSource(), objectMapper.writeValueAsString(inputs));
         SubmissionResult submissionResult = checkerService.processResponse(response, inputs, outputs);
+        ProgressId progressId = new ProgressId();
+        progressId.setTask(task);
+        User user = new User();
+        user.setUsername("admin.user"); //TODO
+        progressId.setUser(user);
+        Progress progress = progressRepository.findOne(progressId);
+        if (progress == null) {
+            progress = new Progress();
+            progress.setPk(progressId);
+        }
+        if (submissionResult.isValid()) {
+            progress.setLanguage(lang);
+            progress.setSolution(submissionRequest.getSource());
+        }
+        progress.setAttempts(progress.getAttempts() + 1);
+        progressRepository.save(progress);
 
         return new ResponseEntity<>(submissionResult, HttpStatus.OK);
     }

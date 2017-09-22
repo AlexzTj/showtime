@@ -1,7 +1,6 @@
 package com.demo.showtime.model;
 
 import com.demo.showtime.validator.NullOrNotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,26 +10,20 @@ import java.io.Serializable;
  * Created by atujicov on 9/18/2017.
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"TASK_ID", "USER_ID"}, name = "uk_task_user"))
+@AssociationOverrides({
+        @AssociationOverride(name = "pk.task",
+                joinColumns = @JoinColumn(name = "TASK_ID")),
+        @AssociationOverride(name = "pk.user",
+                joinColumns = @JoinColumn(name = "USER_ID"))})
 public class Progress implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true, updatable = false)
-    @Access(AccessType.PROPERTY)
-    private Integer progressId;
-    @NullOrNotBlank
-    private String solution;
-    @NullOrNotBlank
-    private Integer language;
-    @NotNull
-    private Integer attempts;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TASK_ID", foreignKey = @ForeignKey(name = "fk_task"))
-    private Task task;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name = "fk_user"))
-    private User user;
+    @EmbeddedId
+    private ProgressId pk = new ProgressId();
 
+    private String solution;
+
+    private Integer language;
+
+    private Integer attempts = 0;
 
     public String getSolution() {
         return solution;
@@ -48,28 +41,30 @@ public class Progress implements Serializable {
         this.attempts = attempts;
     }
 
-    public Integer getProgressId() {
-        return progressId;
+    public ProgressId getPk() {
+        return pk;
     }
 
-    public void setProgressId(Integer progressId) {
-        this.progressId = progressId;
+    public void setPk(ProgressId pk) {
+        this.pk = pk;
     }
 
+    @Transient
     public Task getTask() {
-        return task;
+        return pk.getTask();
     }
 
     public void setTask(Task task) {
-        this.task = task;
+        pk.setTask(task);
     }
 
+    @Transient
     public User getUser() {
-        return user;
+        return pk.getUser();
     }
 
     public void setUser(User user) {
-        this.user = user;
+        pk.setUser(user);
     }
 
     public Integer getLanguage() {
@@ -87,16 +82,11 @@ public class Progress implements Serializable {
 
         Progress progress = (Progress) o;
 
-        if (!getLanguage().equals(progress.getLanguage())) return false;
-        if (!getTask().equals(progress.getTask())) return false;
-        return getUser().equals(progress.getUser());
+        return getPk().equals(progress.getPk());
     }
 
     @Override
     public int hashCode() {
-        int result = getLanguage().hashCode();
-        result = 31 * result + getTask().hashCode();
-        result = 31 * result + getUser().hashCode();
-        return result;
+        return getPk().hashCode();
     }
 }

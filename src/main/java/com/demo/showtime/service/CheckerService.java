@@ -40,6 +40,8 @@ public class CheckerService {
                 result0.setStdout(actualOutput);
                 if (!expectedOutput.equals(actualOutput)) {
                     result0.setBusinessError("Wrong Answer!");
+                } else {
+                    submissionResult.setValid(true);
                 }
             } else {
                 result0.setStdError((String) result.getStderr().get(i));

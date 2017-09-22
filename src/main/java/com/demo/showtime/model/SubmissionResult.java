@@ -1,5 +1,7 @@
 package com.demo.showtime.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,8 @@ import java.util.List;
  * Created by atujicov on 9/21/2017.
  */
 public class SubmissionResult {
+    @JsonIgnore
+    private boolean isValid;
     private CompilationError compilationError;
     private List<Result> results = new ArrayList<>();
 
@@ -24,6 +28,14 @@ public class SubmissionResult {
 
     public void setResults(List<Result> results) {
         this.results = results;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
     }
 
     public static class CompilationError {

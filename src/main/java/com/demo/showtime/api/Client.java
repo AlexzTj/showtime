@@ -38,7 +38,8 @@ public class Client {
     private String key;
     @Value("${submission.wait}")
     private String submissionWait;
-
+    @Value("${submission.lang}")
+    private Integer lang;
 
     public Response submit(String source, String testCases) {
         logger.debug("Preparing for submit source: {}, testCases:{}", source, testCases);
@@ -47,7 +48,7 @@ public class Client {
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("source", source);
-        map.add("lang", "5");
+        map.add("lang", lang.toString());
         map.add("testcases", testCases);
         map.add("api_key", key);
         HttpEntity<MultiValueMap<String, String>> httpReq = new HttpEntity<>(map, headers);

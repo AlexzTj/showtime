@@ -3,6 +3,7 @@ package com.demo.showtime.model;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by atujicov on 9/19/2017.
@@ -21,7 +22,17 @@ public class TestCase {
     @JoinColumn(name = "TASK_ID", foreignKey = @ForeignKey(name = "fk_task"))
     private Task task;
 
+    public TestCase() {
+    }
+
+    public TestCase(Task task, String input, String output) {
+        this.task = task;
+        this.input = input;
+        this.output = output;
+    }
+    @NotNull
     private String input;
+    @NotNull
     private String output;
 
     public String getInput() {

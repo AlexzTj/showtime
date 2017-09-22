@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -61,6 +62,7 @@ public class Task implements Serializable {
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
+    @Valid
     private Set<TestCase> testCases = new HashSet<>(0);
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)

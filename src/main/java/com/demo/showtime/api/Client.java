@@ -2,6 +2,10 @@ package com.demo.showtime.api;
 
 import com.demo.showtime.api.hackerrank.model.submission.Request;
 import com.demo.showtime.api.hackerrank.model.submission.Response;
+import com.demo.showtime.controller.SubmissionController;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -12,7 +16,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -23,6 +26,7 @@ import java.net.URLEncoder;
  */
 @Component
 public class Client {
+    private static final Logger logger = LoggerFactory.getLogger(Client.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -35,20 +39,16 @@ public class Client {
     @Value("${submission.wait}")
     private String submissionWait;
 
-    public Response submit(Request request) {
-//        SubmissionRequestEnriched enriched = null;
-//        try {
-//            enriched = new SubmissionRequestEnriched(request);
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
+
+    public Response submit(String source, String testCases) {
+        logger.debug("Preparing for submit source: {}, testCases:{}", source, testCases);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
-        map.add("source", "print 1");
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("source", source);
         map.add("lang", "5");
-        map.add("testcases", "[\"1\"]");
+        map.add("testcases", testCases);
         map.add("api_key", key);
         HttpEntity<MultiValueMap<String, String>> httpReq = new HttpEntity<>(map, headers);
         return restTemplate.postForObject(submitURI, httpReq, Response.class);
@@ -63,12 +63,13 @@ public class Client {
         private final String api_key;
 
         public SubmissionRequestEnriched(Request request) throws UnsupportedEncodingException {
-            source = URLEncoder.encode(request.getSource(),"UTF-8");
+            source = URLEncoder.encode(request.getSource(), "UTF-8");
             lang = request.getLang();
-            testcases = URLEncoder.encode(request.getTestcases(),"UTF-8");
+            testcases = URLEncoder.encode(request.getTestcases(), "UTF-8");
             wait = submissionWait;
             format = submissionFormat;
-            api_key = key;;
+            api_key = key;
+            ;
         }
 
         public String getSource() {

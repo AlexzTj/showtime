@@ -38,7 +38,7 @@ public class Result {
   /* Signal */
   private List<Integer> signal = new ArrayList<Integer>();
   /* Stderr */
-  private List<Boolean> stderr = new ArrayList<Boolean>();
+  private List<Object> stderr = new ArrayList<>();
   /* Stdout */
   private List<String> stdout = new ArrayList<String>();
   /* Time */
@@ -164,10 +164,10 @@ public class Result {
   }
 
   @JsonProperty("stderr")
-  public List<Boolean> getStderr() {
+  public List<Object> getStderr() {
     return stderr;
   }
-  public void setStderr(List<Boolean> stderr) {
+  public void setStderr(List<Object> stderr) {
     this.stderr = stderr;
   }
 

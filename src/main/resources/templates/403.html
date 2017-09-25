@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html layout:decorate="layouts/default">
+<head>
+    <title>403 page</title>
+</head>
+<body>
+<div id="content" layout:fragment="content">
+    <div class="row">
+
+            <h1>403 - Access is denied</h1>
+            <div th:inline="text">Hello '[[${#httpServletRequest.remoteUser}]]',
+                you do not have permission to access this page.</div>
+
+    </div>
+</div>
+</body>
+</html>

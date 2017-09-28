@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/default">
+<head>
+    <title>Home page</title>
+</head>
+<body>
+<div id="content" class="container mt-5 mb-5" layout:fragment="content">
+    <div class="col-md-12">
+
+        <div class="box" id="text-page" ng-controller="AceCtrl" >
+
+            <h3 th:text="${task.title}"></h3>
+            <p th:text="${task.description}"></p>
+            <div class="col-md-6">
+                Mode : <select class="form-control" ng-model="mode" ng-options="m for m in modes" ng-change="modeChanged()"></select>
+            </div>
+            <div id="ace-editor" ui-ace="{
+  onLoad: aceLoaded,
+  useWrapMode : true,
+  showGutter: true,
+  mode: 'java',
+  theme:'monokai',
+  require: ['ace/ext/language_tools'],
+  advanced: {
+      enableSnippets: true,
+      enableBasicAutocompletion: true,
+      enableLiveAutocompletion: true
+  },
+  rendererOptions: {
+      maxLines: 100,
+      minLines:30
+  }
+}" ng-model="submission.source"></div>
+            <button th:attr="ng-click='submitSource('+${task.taskId}+')'"  class="btn btn-primary">Submit</button>
+            <div class="text-danger">{{errorMessage}}</div>
+            <div class="text-danger">{{response.compilationError.message}}<br></br>{{errorMessage.compilationError.code}}<br></br></div>
+            <div class="text-success" ng-repeat="res in response.results">
+                {{res.stdin}}<br></br>
+                {{res.stdout}}<br></br>
+                {{res.expected}}<br></br>
+                {{res.stdError}}<br></br>
+                {{res.businessError}}<br></br>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

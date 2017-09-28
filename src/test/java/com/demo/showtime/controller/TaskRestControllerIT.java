@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:testdata.sql")
-public class TaskControllerIT {
+public class TaskRestControllerIT {
     @Autowired
     private TestRestTemplate restTemplate;
     @PersistenceContext
@@ -31,14 +31,14 @@ public class TaskControllerIT {
 
     @Test
     public void getAllTasks() {
-        Map result = restTemplate.getForObject("/tasks?page=0&size=1", LinkedHashMap.class);
+        Map result = restTemplate.getForObject("/rest/tasks?page=0&size=1", LinkedHashMap.class);
         ArrayList content = (ArrayList) result.get("content");
         assertEquals(1, content.size());
     }
 
     @Test
     public void getTaskById() throws Exception {
-        Task result = restTemplate.getForObject("/tasks/{id}", Task.class, 1);
+        Task result = restTemplate.getForObject("/rest/tasks/{id}", Task.class, 1);
         assertTrue(result.getProgressSet().isEmpty());
         assertTrue(result.getTestCases().isEmpty());
         assertEquals(new Integer(1), result.getTaskId());
@@ -57,7 +57,7 @@ public class TaskControllerIT {
         task.setTestCases(testCases);
         task.setDescription("custom desc");
         task.setTitle("custom task");
-        ResponseEntity result = restTemplate.postForEntity("/tasks", task, ResponseEntity.class);
+        ResponseEntity result = restTemplate.postForEntity("/rest/tasks", task, ResponseEntity.class);
         assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
@@ -75,7 +75,7 @@ public class TaskControllerIT {
         task.setTestCases(testCases);
         task.setDescription("custom desc");
         task.setTitle("custom task");
-        ResponseEntity result = restTemplate.postForEntity("/tasks", task, ResponseEntity.class);
+        ResponseEntity result = restTemplate.postForEntity("/rest/tasks", task, ResponseEntity.class);
         assertEquals(HttpStatus.OK, result.getStatusCode());
 
         Task task1 = entityManager.createQuery("select task from Task task join fetch task.testCases where task.taskId=:id", Task.class)

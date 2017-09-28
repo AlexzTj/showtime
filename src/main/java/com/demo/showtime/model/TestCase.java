@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
  * Created by atujicov on 9/19/2017.
  */
 @Entity
-@Table(name = "TEST_CASES", uniqueConstraints = @UniqueConstraint(columnNames = {"TASK_ID", "INPUT"}, name = "uk_task_input"))
+@Table(name = "TEST_CASES", uniqueConstraints = @UniqueConstraint(columnNames = {"TASK_ID", "INPUT"}, name = "uk_id_task_input"))
 public class TestCase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

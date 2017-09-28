@@ -1,5 +1,6 @@
 package com.demo.showtime.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -10,7 +11,7 @@ public class TaskReq {
     private Integer category;
     private String title;
     private String description;
-    private Set<TestCaseDTO> testCases;
+    private Set<TestCaseDTO> testCases = new HashSet<>(0);
 
     public Integer getId() {
         return id;

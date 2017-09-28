@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/default">
+<head>
+    <title>Home page</title>
+</head>
+<body>
+<div id="content" class="container mt-5 mb-5" layout:fragment="content">
+    <div class="col-md-12">
+
+        <div class="box" id="text-page" ng-controller="TaskCtrl" ng-init="getAll(1,20)">
+            <h3>Current Tasks</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="task in tasks">
+                    <td>{{task.taskId}}</td>
+                    <td>{{task.title}}</td>
+                    <td>{{task.category}}</td>
+                    <td>
+                        <button ng-click="deleteTask({{task.taskId}})" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Remove</button>
+                        <a  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

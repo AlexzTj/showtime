@@ -41,6 +41,13 @@ public class Task implements Serializable {
     @JoinColumn(name = "CATEGORY_ID", foreignKey = @ForeignKey(name = "fk_category"))
     private Category category;
 
+    @JsonIgnore
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.LAZY)
+//
+//    @JoinColumn(name = "USERNAME", foreignKey = @ForeignKey(name = "fk_user"))
+    private User user;
+
     @NotEmpty
     @Length(min = 1, max = 100)
     @Column(unique = true)
@@ -63,6 +70,7 @@ public class Task implements Serializable {
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @Valid
+    @NotEmpty
     private Set<TestCase> testCases = new HashSet<>(0);
 
     @OneToMany(mappedBy = "pk.task", cascade = CascadeType.ALL)
@@ -139,6 +147,14 @@ public class Task implements Serializable {
         testCases.add(testCase);
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -146,16 +162,26 @@ public class Task implements Serializable {
 
         Task task = (Task) o;
 
-        if (!getCategory().getCategoryId().equals(task.getCategory().getCategoryId())) return false;
-        if (!getTitle().equals(task.getTitle())) return false;
-        return getDescription().equals(task.getDescription());
+        if (getTaskId() != null ? !getTaskId().equals(task.getTaskId()) : task.getTaskId() != null) return false;
+        if (!getCategory().equals(task.getCategory())) return false;
+        if (!getUser().equals(task.getUser())) return false;
+        if (getTitle() != null ? !getTitle().equals(task.getTitle()) : task.getTitle() != null) return false;
+        if (getDescription() != null ? !getDescription().equals(task.getDescription()) : task.getDescription() != null)
+            return false;
+        if (getLastModified() != null ? !getLastModified().equals(task.getLastModified()) : task.getLastModified() != null)
+            return false;
+        return getCreatedOn() != null ? getCreatedOn().equals(task.getCreatedOn()) : task.getCreatedOn() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getCategory().hashCode();
-        result = 31 * result + getTitle().hashCode();
-        result = 31 * result + getDescription().hashCode();
+        int result = getTaskId() != null ? getTaskId().hashCode() : 0;
+        result = 31 * result + getCategory().hashCode();
+        result = 31 * result + getUser().hashCode();
+        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + (getLastModified() != null ? getLastModified().hashCode() : 0);
+        result = 31 * result + (getCreatedOn() != null ? getCreatedOn().hashCode() : 0);
         return result;
     }
 }

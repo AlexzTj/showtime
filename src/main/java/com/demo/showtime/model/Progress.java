@@ -4,6 +4,7 @@ import com.demo.showtime.validator.NullOrNotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -18,7 +19,7 @@ import java.io.Serializable;
 public class Progress implements Serializable {
     @EmbeddedId
     private ProgressId pk = new ProgressId();
-
+    @Size(max = 2000)
     private String solution;
 
     private Integer language;

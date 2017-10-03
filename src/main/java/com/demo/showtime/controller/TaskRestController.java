@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -82,6 +83,8 @@ public class TaskRestController {
             task0.addTestCase(TestCaseConverter.convertDTOToEntity(dto));
         }
         defaultValidator.validate(task0, result);
+        String description = task0.getDescription();
+        task0.setDescription(HtmlUtils.htmlEscape(description));
         return saveOrUpdate(task0, result);
     }
 
@@ -100,4 +103,5 @@ public class TaskRestController {
         taskRepository.save(task);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

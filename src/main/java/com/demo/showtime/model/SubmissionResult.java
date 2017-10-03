@@ -9,7 +9,6 @@ import java.util.List;
  * Created by atujicov on 9/21/2017.
  */
 public class SubmissionResult {
-    @JsonIgnore
     private boolean isValid;
     private CompilationError compilationError;
     private List<Result> results = new ArrayList<>();

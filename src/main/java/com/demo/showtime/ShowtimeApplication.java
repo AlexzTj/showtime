@@ -25,7 +25,7 @@ public class ShowtimeApplication extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");
-        registry.addViewController("/tasks/new").setViewName("addtask");
+
         registry.addViewController("/tasks").setViewName("tasks");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/test").setViewName("x");

@@ -1,0 +1,191 @@
+
+
+body {
+    font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';margin-bottom: 70px; }
+
+.masthead {
+    color: #fff;
+    background: url(../img/bg-pattern.png),#7b4397;
+    background: url(../img/bg-pattern.png),-webkit-linear-gradient(to left,#7b4397,#dc2430);
+    background: url(../img/bg-pattern.png),linear-gradient(to left,#7b4397,#dc2430);
+}
+
+
+hr {
+    max-width: 100px;
+    margin: 25px auto 0;
+    border-width: 1px;
+    border-color: rgba(34, 34, 34, 0.1); }
+
+hr.light {
+    border-color: white; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
+    font-weight: 200;
+    letter-spacing: 1px; }
+
+p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px; }
+
+section {
+    padding: 100px 0; }
+section h2 {
+    font-size: 50px; }
+
+#mainNav {
+    border-color: rgba(34, 34, 34, 0.05);
+    background-color: white;
+    -webkit-transition: all .35s;
+    -moz-transition: all .35s;
+    transition: all .35s;
+    font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
+    font-weight: 200;
+    letter-spacing: 1px; }
+#mainNav .navbar-brand {
+    font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
+    font-weight: 200;
+    color:#fff;
+    letter-spacing: 1px;
+    font-size: 21px;
+    border: 1px solid #fff;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-transform: uppercase;
+    margin-top: 4px;}
+#mainNav .navbar-brand:hover, #mainNav .navbar-brand:focus {
+    color: #fcbd20; }
+#mainNav .navbar-toggler {
+    font-size: 12px;
+    padding: 8px 10px;
+    color: #222222; }
+#mainNav    a {
+    font-size: 11px;
+    font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
+    letter-spacing: 2px;
+    text-transform: uppercase; }
+#mainNav    a.active {
+    color: #fdcc52 !important;
+    background-color: transparent; }
+#mainNav    a.active:hover {
+    background-color: transparent; }
+#mainNav    a,
+#mainNav    a:focus {
+    color: #222222; }
+#mainNav form button{
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgba(255, 255, 255, 0.7);
+
+    font-family: Lato, Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 200;
+    height: 50px;
+    letter-spacing: 2px;
+    line-height: 20px;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+
+    position: relative;
+    text-align: left;
+    text-decoration-color: rgba(255, 255, 255, 0.7);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-transform: uppercase;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+#mainNav    a:hover,
+#mainNav    a:focus:hover {
+    color: #fdcc52;background: transparent }
+@media (min-width: 992px) {
+    #mainNav {
+        border-color: transparent;
+        background-color: transparent; }
+    #mainNav .navbar-brand {
+
+        color: fade(white, 70%); }
+    #mainNav .navbar-brand:hover, #mainNav .navbar-brand:focus {
+        color: white; }
+    #mainNav   a,
+    #mainNav   a:focus {
+        color: rgba(255, 255, 255, 0.7); }
+    #mainNav a:hover,
+    #mainNav  a:focus:hover {
+        color: white; }
+    #mainNav.navbar-shrink {
+        border-color: rgba(34, 34, 34, 0.1);
+        background-color: white; }
+    #mainNav.navbar-shrink .navbar-brand {
+        color: #222222; }
+    #mainNav.navbar-shrink .navbar-brand:hover, #mainNav.navbar-shrink .navbar-brand:focus {
+        color: #fdcc52; }
+    #mainNav.navbar-shrink  a,
+    #mainNav.navbar-shrink   a:focus {
+        color: #222222; }
+    #mainNav.navbar-shrink  a:hover,
+    #mainNav.navbar-shrink   a:focus:hover {
+        color: #fdcc52; } }
+
+footer {
+    padding: 25px 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.3);
+    background-color: #222222; }
+
+.bg-primary {
+    background: #fdcc52;
+    background: -webkit-linear-gradient(#fdcc52, #fdc539);
+    background: linear-gradient(#fdcc52, #fdc539); }
+
+.text-primary {
+    color: #fdcc52; }
+
+.no-gutter > [class*='col-'] {
+    padding-right: 0;
+    padding-left: 0; }
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.footer {
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+
+}
+#ace-editor{height: 300px;border:1px solid rgba(0,0,0,.7)}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+.shadow{box-shadow: 0px 0px 44px 0px rgba(255,255,255,.5)}

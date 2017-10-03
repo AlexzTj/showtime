@@ -164,7 +164,7 @@ public class Task implements Serializable {
 
         if (getTaskId() != null ? !getTaskId().equals(task.getTaskId()) : task.getTaskId() != null) return false;
         if (!getCategory().equals(task.getCategory())) return false;
-        if (!getUser().equals(task.getUser())) return false;
+       // if (!getUser().equals(task.getUser())) return false;
         if (getTitle() != null ? !getTitle().equals(task.getTitle()) : task.getTitle() != null) return false;
         if (getDescription() != null ? !getDescription().equals(task.getDescription()) : task.getDescription() != null)
             return false;
@@ -177,7 +177,7 @@ public class Task implements Serializable {
     public int hashCode() {
         int result = getTaskId() != null ? getTaskId().hashCode() : 0;
         result = 31 * result + getCategory().hashCode();
-        result = 31 * result + getUser().hashCode();
+//        result = 31 * result + getUser().hashCode();
         result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + (getLastModified() != null ? getLastModified().hashCode() : 0);

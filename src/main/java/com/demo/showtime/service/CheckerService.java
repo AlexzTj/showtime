@@ -29,6 +29,7 @@ public class CheckerService {
         List<String> messages = result.getMessage();
         List<String> stdout = result.getStdout();
         int i = 0;
+        submissionResult.setValid(true);
         for (String msg : messages) {
             SubmissionResult.Result result0 = new SubmissionResult.Result();
             result0.setStdin(inputs.get(i));
@@ -38,14 +39,14 @@ public class CheckerService {
             if (SUCCESS.equals(msg)) {
                 String actualOutput = stdout.get(i);
                 result0.setStdout(actualOutput);
-                if (!expectedOutput.equals(actualOutput)) {
+                if (!expectedOutput.equals(actualOutput.replace("\n", ""))) {
                     result0.setBusinessError("Wrong Answer!");
-                } else {
-                    submissionResult.setValid(true);
+                    submissionResult.setValid(false);
                 }
             } else {
                 result0.setStdError((String) result.getStderr().get(i));
                 result0.setBusinessError("Runtime error");
+                submissionResult.setValid(false);
             }
             submissionResult.getResults().add(result0);
             i++;

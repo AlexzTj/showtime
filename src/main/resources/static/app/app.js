@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    var showtime = angular.module("showtime", ['ui.ace'])
+    var showtime = angular.module("showtime", ['ui.ace','ngSanitize'])
 
     .controller('TaskCtrl',function($scope,$location, $http) {
 
@@ -82,7 +82,7 @@
 
 })
 
-    .controller('AceCtrl', ['$scope','$http', function ($scope,$http) {
+    .controller('AceCtrl', ['$scope','$http','$sanitize', function ($scope,$http,$sanitize) {
         // The modes
         $scope.modes = ['Java'];
         $scope.mode = $scope.modes[0];
@@ -99,18 +99,25 @@
         };
 
         $scope.submitSource = function (id) {
+            $scope.loading = true;
             $scope.submission.taskId = id;
             $http.post('/checker/submission', $scope.submission).then(
                 function success(response) {
+                    $scope.errorMessage = '';
                     $scope.response = response.data;
-                   // $location.path('/tasks');
+                    $scope.loading = false;
+                    $scope.$broadcast('dataloaded');
+                    console.log($scope.response)
                 },
                 function error (response) {
-
                     $scope.errorMessage = 'Error!';
+                    $scope.loading = false;
                 }
             );
-        }
+        };
+        $scope.$on('dataloaded', function () {
+            $('#tabs').tab();
+        })
 
     }])
 })(window.angular);

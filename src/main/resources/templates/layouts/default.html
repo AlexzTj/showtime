@@ -1,0 +1,75 @@
+<!DOCTYPE  html>
+<html ng-app="showtime" ng-cloak="" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+
+    <meta charset="utf-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+    <meta name="description" content=""></meta>
+    <meta name="author" content=""></meta>
+
+    <title>Shop Item - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet"></link>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/main.css}" rel="stylesheet"></link>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css"></link>
+  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet"></link>
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"></link>
+  <script th:src="@{/app/src-min-noconflict/ace.js}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-sanitize.js"></script>
+  <script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
+  <script th:src="@{/app/ui-ace.js}"></script>
+  <script th:src="@{/app/src-min-noconflict/ext-language_tools.js}"></script>
+
+
+</head>
+
+
+    <body id="page-top" class="masthead">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Show Time</a>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item " sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/login}">Login</a></li>
+            <li class="nav-item " sec:authorize="isAnonymous()"><a class="nav-link"  th:href="@{/}">Register</a></li>
+            <li class="nav-item " sec:authorize="isAuthenticated()" style="color:white"></li>
+            <li class="nav-item " sec:authorize="isAuthenticated()">
+              <form th:action="@{/logout}" method="POST" id="logout-form"  style="display: inline-block">
+                  <button type="submit" class="btn-link" style="color:white" >Log out</button> Hi, <span sec:authentication="name"></span>
+              </form>
+            </li>
+          </ul>
+      </div>
+            </nav>
+
+    <!-- Page Content -->
+    <div class="container mt-5 mb-5" id="content" layout:fragment="content">
+
+
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="bg-dark footer">
+      <div class="container">
+        <span class="m-0 text-center text-white">Copyright &copy; Your Website 2017</span>
+      </div>
+      <!-- /.container -->
+    </footer>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/app/app.js}"></script>
+  </body>
+
+</html>

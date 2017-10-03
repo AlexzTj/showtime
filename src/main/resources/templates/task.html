@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/default">
+<head>
+    <title>Home page</title>
+</head>
+<body>
+<div id="content" class="container mt-5 mb-5" layout:fragment="content">
+    <div class="col-md-12">
+
+        <div class="box " id="text-page" ng-controller="AceCtrl" >
+
+            <h3 th:text="${task.title}"></h3>
+            <p th:utext="${task.description}"></p>
+            <div class="row"><div class="col-md-6">
+                <label> Mode :</label> <select class="form-control" ng-model="mode" ng-options="m for m in modes" ng-change="modeChanged()"></select>
+            </div></div>
+            <div id="ace-editor" class="shadow" ui-ace="{
+  onLoad: aceLoaded,
+  useWrapMode : true,
+  showGutter: true,
+  mode: 'java',
+
+  theme:'eclipse',
+  require: ['ace/ext/language_tools'],
+  advanced: {
+      enableSnippets: true,
+      enableBasicAutocompletion: true,
+      enableLiveAutocompletion: true
+  },
+  rendererOptions: {
+      maxLines: 100,
+      minLines:30,
+      fontSize: '14px'
+  }
+}" ng-model="submission.source"></div>
+            <br></br>
+            <button th:attr="ng-click='submitSource('+${task.taskId}+')'"  class="btn btn-primary btn-lg" ng-disabled="loading">
+                Submit <span ng-show="loading"  class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></button>
+            <br><br>
+            <div class="text-danger">{{errorMessage}}</div>
+            <div class="alert alert-danger" ng-if="response.compilationError">
+                <strong>Message: </strong>{{response.compilationError.message}}<br></br><strong>Code: </strong>{{errorMessage.compilationError.code}}</div>
+            <div class="alert alert-danger" ng-if="response.results && !response.valid"><strong>Submission failed!</strong></div>
+            <div class="alert alert-success" ng-if="response.valid"><strong>Submission success!</strong></div>
+            <div class="panel with-nav-tabs panel-default" ng-if="response.results">
+
+                <div class="panel-heading">
+                    <ul  class="nav nav-tabs" id="tabs">
+                        <li  ng-repeat="res in response.results">
+                            <a ng-class="{active: $index==0}"  href="#{{'tc' + $index}}" data-toggle="tab">Test Case {{$index}}</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="panel-body">
+                     <div class="tab-content clearfix">
+                <div class="tab-pane " ng-class="{active: $index==0}" id="{{'tc' + $index}}" ng-repeat="res in response.results">
+                    <div class="alert alert-info"><strong>Test input</strong><br></br>{{res.stdin}}</div>
+                    <div class="alert alert-info"><strong>Actual output</strong><br></br>{{res.stdout}}</div>
+                    <div class="alert alert-info"><strong>Expected output</strong><br></br>{{res.expected}}</div>
+                    <div class="alert alert-danger" ng-if="res.stdError || res.businessError"><strong>Error</strong><br></br>{{res.stdError}}<br></br>{{res.businessError}}</div>
+                </div>
+            </div>
+                 </div>
+
+            </div>
+
+</div></div></div>
+</body>
+</html>
